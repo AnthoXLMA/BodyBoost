@@ -14,15 +14,18 @@
   <body class="bg-light">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
       <div class="container">
-        <a class="navbar-brand" href="/dashboard">SportTrack</a>
+        <a class="navbar-brand" href="/dashboard">Body Boost</a>
         <ul class="navbar-nav ms-auto">
           <% if current_user %>
+            <li class="nav-item"><%= link_to "Home", dashboard_path, class: "nav-link" %></li>
             <li class="nav-item"><%= link_to "Activités", activities_path, class: "nav-link" %></li>
             <li class="nav-item"><%= link_to "Repas", meals_path, class: "nav-link" %></li>
+            <li class="nav-item"><%= link_to "Blog", meals_path, class: "nav-link" %></li>
             <li class="nav-item"><%= link_to "Déconnexion", logout_path, method: :delete, class: "nav-link" %></li>
           <% else %>
             <li class="nav-item"><%= link_to "Connexion", login_path, class: "nav-link" %></li>
             <li class="nav-item"><%= link_to "Inscription", signup_path, class: "nav-link" %></li>
+            <li class="nav-item"><%= link_to "Blog", meals_path, class: "nav-link" %></li>
           <% end %>
         </ul>
       </div>

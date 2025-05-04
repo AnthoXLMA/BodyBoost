@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'meal_items/create'
   get 'dashboard/show'
   get 'meals/index'
   get 'meals/new'
@@ -39,4 +40,8 @@ Rails.application.routes.draw do
 
   resources :activities
   resources :meals
+  resources :foods, only: [:index]
+  resources :meal_items, only: [:create]
+
 end
+

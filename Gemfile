@@ -31,6 +31,9 @@ gem 'bootstrap', '~> 5.3.0'
 gem 'jquery-rails'
 gem 'sassc-rails'
 
+gem "cssbundling-rails"
+
+
 
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
