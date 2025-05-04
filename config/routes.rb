@@ -42,6 +42,7 @@ Rails.application.routes.draw do
   resources :meals
   resources :foods, only: [:index]
   resources :meal_items, only: [:create]
+  resource :profile, only: [:edit, :update], controller: 'users'
 
 end
 

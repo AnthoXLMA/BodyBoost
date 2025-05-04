@@ -16,6 +16,8 @@ class DashboardController < ApplicationController
 
     @total_calories = today_meal&.meal_items&.sum { |item| (item.food.calories * item.quantity / 100.0).round } || 0
     @total_proteins = today_meal&.meal_items&.sum { |item| (item.food.proteins * item.quantity / 100.0).round(1) } || 0
+
+    @recent_meals = @user.meals.includes(meal_items: :food).order(date: :desc).limit(5)
   end
 
   private
@@ -25,6 +27,4 @@ class DashboardController < ApplicationController
       redirect_to login_path, alert: "Vous devez être connecté pour accéder au tableau de bord."
     end
   end
-
-
 end

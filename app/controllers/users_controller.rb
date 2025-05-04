@@ -13,6 +13,26 @@ class UsersController < ApplicationController
     end
   end
 
+  def edit
+    @user = current_user
+  end
+
+  def update
+    @user = current_user
+    if @user.update(edit_user_params)
+      redirect_to dashboard_path, notice: "Profil mis à jour avec succès."
+    else
+      flash.now[:alert] = "Erreur lors de la mise à jour du profil."
+      render :edit
+    end
+  end
+
+  private
+
+  def edit_user_params
+    params.require(:user).permit(:height, :weight)
+  end
+
   private
 
   def user_params
