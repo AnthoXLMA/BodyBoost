@@ -1,31 +1,37 @@
 <h2 class="mb-4">Tableau des aliments</h2>
 
 <% @categories.each do |category| %>
-  <h4 class="mt-4"><%= category.name %></h4>
-  <table class="table table-bordered table-hover">
-    <thead class="table-light">
-      <tr>
-        <th>Aliment</th>
-        <th>Calories (pour 100g)</th>
-        <th>Protéines (pour 100g)</th>
-        <th>Ajouter au repas</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% category.foods.each do |food| %>
+  <div class="mb-5">
+    <h4 class="text-primary"><%= category.name %></h4>
+
+    <table class="table table-striped table-bordered">
+      <thead class="table-light">
         <tr>
-          <td><%= food.name %></td>
-          <td><%= food.calories %> kcal</td>
-          <td><%= food.proteins %> g</td>
-          <td>
-            <%= form_with url: meal_items_path, method: :post, local: true do |f| %>
-              <%= hidden_field_tag :food_id, food.id %>
-              <%= number_field_tag :quantity, 100, min: 1, class: "form-control d-inline w-25" %>
-              <%= submit_tag "Ajouter", class: "btn btn-sm btn-success ms-2" %>
-            <% end %>
-          </td>
+          <th>Aliment</th>
+          <th>Calories (pour 100g)</th>
+          <th>Protéines (pour 100g)</th>
+          <th>Quantité (g)</th>
+          <th>Action</th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+      <tbody>
+        <% category.foods.each do |food| %>
+          <tr>
+            <td><%= food.name %></td>
+            <td><%= food.calories %> kcal</td>
+            <td><%= food.proteins %> g</td>
+            <td>
+              <%= form_with url: meal_items_path, method: :post, local: true do |f| %>
+                <%= hidden_field_tag :food_id, food.id %>
+                <%= number_field_tag :quantity, 100, min: 1, class: "form-control", style: "width: 80px;" %>
+            </td>
+            <td>
+                <%= f.submit "Ajouter", class: "btn btn-sm btn-success" %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 <% end %>

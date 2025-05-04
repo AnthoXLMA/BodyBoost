@@ -3,7 +3,7 @@ class MealsController < ApplicationController
   before_action :set_meal, only: [:edit, :update, :destroy]
 
   def index
-    @meals = current_user.meals.order(date: :desc)
+        @meals = current_user.meals.includes(meal_items: :food).order(date: :desc)
   end
 
   def new

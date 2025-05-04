@@ -30,8 +30,55 @@
       <p class="card-text">Protéines aujourd’hui : <strong><%= @total_proteins %> g</strong></p>
       <!-- Ces valeurs peuvent venir de @user.meals ou d'une méthode de calcul -->
     </div>
-
   </div>
+
+  <h3 class="mt-5">Historique des 5 derniers repas</h3>
+
+<% if @recent_meals.any? %>
+  <% @recent_meals.each do |meal| %>
+    <div class="card mb-3">
+      <div class="card-header bg-secondary text-white">
+        Repas du <%= meal.date.strftime("%d %B %Y") %>
+      </div>
+      <div class="card-body">
+        <% if meal.meal_items.any? %>
+          <table class="table table-sm table-striped">
+            <thead>
+              <tr>
+                <th>Aliment</th>
+                <th>Quantité (g)</th>
+                <th>Calories</th>
+                <th>Protéines</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% total_cal = 0 %>
+              <% total_prot = 0 %>
+              <% meal.meal_items.each do |item| %>
+                <% cal = (item.food.calories * item.quantity / 100.0).round %>
+                <% prot = (item.food.proteins * item.quantity / 100.0).round(1) %>
+                <% total_cal += cal %>
+                <% total_prot += prot %>
+                <tr>
+                  <td><%= item.food.name %></td>
+                  <td><%= item.quantity %></td>
+                  <td><%= cal %> kcal</td>
+                  <td><%= prot %> g</td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+          <p class="mt-2"><strong>Total :</strong> <%= total_cal %> kcal – <%= total_prot %> g protéines</p>
+        <% else %>
+          <p class="text-muted">Aucun aliment enregistré pour ce repas.</p>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <p>Aucun repas enregistré pour l’instant.</p>
+<% end %>
+
 
   <div class="mt-4 text-end">
     <%= link_to 'Déconnexion', logout_path, method: :delete, class: 'btn btn-danger' %>

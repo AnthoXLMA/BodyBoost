@@ -1,2 +1,55 @@
-<h1>Meals#index</h1>
-<p>Find me in app/views/meals/index.html.erb</p>
+<h2 class="mb-4">Mes repas</h2>
+
+<% if @meals.any? %>
+  <% @meals.each do |meal| %>
+    <div class="card mb-4">
+      <div class="card-header bg-light">
+        <strong>Repas du <%= meal.date.strftime('%d %B %Y') %></strong>
+      </div>
+      <div class="card-body">
+        <% if meal.meal_items.any? %>
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>Aliment</th>
+                <th>Quantité (g)</th>
+                <th>Calories</th>
+                <th>Protéines</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% total_cal = 0 %>
+              <% total_prot = 0 %>
+              <% meal.meal_items.each do |item| %>
+                <% calories = (item.food.calories * item.quantity / 100.0).round %>
+                <% proteins = (item.food.proteins * item.quantity / 100.0).round(1) %>
+                <% total_cal += calories %>
+                <% total_prot += proteins %>
+                <tr>
+                  <td><%= item.food.name %></td>
+                  <td><%= item.quantity %></td>
+                  <td><%= calories %> kcal</td>
+                  <td><%= proteins %> g</td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+
+          <div class="mt-2">
+            <strong>Total du repas :</strong>
+            <%= total_cal %> kcal &mdash; <%= total_prot %> g protéines
+          </div>
+        <% else %>
+          <p class="text-muted">Aucun aliment enregistré pour ce repas.</p>
+        <% end %>
+
+        <div class="mt-3">
+          <%= link_to "Ajouter des aliments", foods_path, class: "btn btn-primary" %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <p>Vous n’avez encore enregistré aucun repas.</p>
+  <%= link_to "Commencer", foods_path, class: "btn btn-success" %>
+<% end %>
