@@ -1,0 +1,39 @@
+<div class="container mt-4">
+  <h2 class="mb-4">Bienvenue, <%= @user.username %> !</h2>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Mes activités sportives</h5>
+          <p class="card-text">Consultez ou enregistrez vos entraînements.</p>
+          <%= link_to 'Voir les activités', activities_path, class: 'btn btn-outline-primary' %>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title">Mes repas</h5>
+          <p class="card-text">Suivez vos apports nutritionnels.</p>
+          <%= link_to 'Voir les repas', meals_path, class: 'btn btn-outline-success' %>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card text-bg-light">
+    <div class="card-body">
+      <h5 class="card-title">Résumé nutritionnel</h5>
+      <p class="card-text">Calories aujourd’hui : <strong><%= @total_calories %> kcal</strong></p>
+      <p class="card-text">Protéines aujourd’hui : <strong><%= @total_proteins %> g</strong></p>
+      <!-- Ces valeurs peuvent venir de @user.meals ou d'une méthode de calcul -->
+    </div>
+
+  </div>
+
+  <div class="mt-4 text-end">
+    <%= link_to 'Déconnexion', logout_path, method: :delete, class: 'btn btn-danger' %>
+  </div>
+</div>
